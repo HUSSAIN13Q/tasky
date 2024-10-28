@@ -2,13 +2,12 @@ import 'leave.dart';
 import 'task.dart';
 
 class Employee {
-  final String id; // Unique identifier for the employee
-  final String name; // Employee's name
-  final String role; // Role, which in this case would be "Employee"
-  final List<String> skills; // List of skills like ["Flutter", "UI"]
-  final List<Task> tasks; // List of tasks assigned to the employee
-  final List<LeaveRequest>
-      leaveRequests; // List of leave requests by the employee
+  final String id;
+  final String name;
+  final String role;
+  final List<String> skills;
+  final List<Task> tasks;
+  final List<LeaveRequest> leaveRequests;
 
   Employee({
     required this.id,
@@ -19,7 +18,6 @@ class Employee {
     this.leaveRequests = const [],
   });
 
-  // Convert Employee instance to a map for database storage
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -31,7 +29,6 @@ class Employee {
     };
   }
 
-  // Factory constructor to create an Employee instance from a map
   factory Employee.fromMap(Map<String, dynamic> map) {
     return Employee(
       id: map['id'],
