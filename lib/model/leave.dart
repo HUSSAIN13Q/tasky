@@ -1,8 +1,8 @@
 class LeaveRequest {
   final String id;
-  final String employeeId; // Link to the employee making the request
-  final String type; // e.g., "Vacation", "Sick Leave"
-  late final String status; // e.g., "pending", "approved", "declined"
+  final String employeeId;
+  final String type;
+  late final String status;
   final DateTime timestamp;
 
   LeaveRequest({

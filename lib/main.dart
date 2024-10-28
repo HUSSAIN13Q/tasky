@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/Provider/employee_provider.dart';
-import 'package:tasky/Provider/manager_provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tasky/Provider/auth_proider.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/sign/login_page.dart';
+import 'package:tasky/sign/signup_page.dart';
 
 void main() {
-  MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => EmployeeProvider()),
-      ChangeNotifierProvider(create: (_) => ManagerProvider()),
-    ],
-    child: MainApp(),
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: const MainApp(),
+    ),
   );
 }
 
@@ -18,12 +21,41 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+    return MaterialApp.router(
+      title: 'Meditation App',
+      routerConfig: _router,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primaryColor: Color(0xFF8990FF),
+        scaffoldBackgroundColor: Color(0xFFE0E7FF),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFF8990FF),
+        ),
+        textTheme: TextTheme(
+          headlineLarge: TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          bodyLarge: TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+          ),
         ),
       ),
     );
   }
 }
+
+final _router = GoRouter(
+  initialLocation: '/login',
+  routes: [
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => LoginPage(),
+    ),
+    GoRoute(
+      path: '/signup',
+      builder: (context, state) => SignupPage(),
+    ),
+  ],
+);

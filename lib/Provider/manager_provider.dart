@@ -26,7 +26,6 @@ class ManagerProvider with ChangeNotifier {
   void assignTask(Employee employee, Task task) {
     employee.tasks.add(task);
     notifyListeners();
-    // You may also want to save this to a backend or update the database here
   }
 
   void updateTaskStatus(Task task, String status, {String? managerComments}) {

@@ -1,37 +1,71 @@
 import 'package:dio/dio.dart';
+import 'package:tasky/model/user.dart';
 import 'package:tasky/services/client_services.dart';
 
+// class AuthServices {
+//   Future<User> registerAPI({
+//     required String email,
+//     required String password,
+//   }) async {
+//     var response = await Client.dio.post('/signup', data: {
+//       "email": email,
+//       "password": password,
+//     });
+
+//     return User(
+//       username: response.data['data']['user'],
+//       token: response.data['data']['token'],
+//     );
+//   }
+
+// Future<String> signin(
+//     {required String username, required String password}) async {
+//   try {
+//     Response response = await Client.dio.post('/signin', data: {
+//       "username": username,
+//       "password": password,
+//     });
+
+//     return response.data["token"];
+//   } on DioError catch (error) {
+//     print(error);
+//   }
+//   throw "an eroror occored";
+// }
+
 class AuthServices {
-  Future<String> signup({
-    required String username,
+  Future<User> signupAPI({
+    required String email,
     required String password,
   }) async {
-    late String token;
-    try {
-      Response response = await Client.dio.post('/signup', data: {
-        "username": username,
-        "password": password,
-      });
-
-      token = response.data["token"];
-    } on DioError catch (error) {
-      print(error);
+    Response response = await Client.dio.post('/signup', data: {
+      "email": email,
+      "password": password,
+    });
+    if (response.statusCode != 200) {
+      throw response.data is Map
+          ? response.data['message']
+          : "Unexpected server error";
     }
-    return token;
+    var user = User.fromJson(response.data['data']);
+    print(response.statusCode);
+
+    return user;
   }
 
-  Future<String> signin(
-      {required String username, required String password}) async {
-    try {
-      Response response = await Client.dio.post('/signin', data: {
-        "username": username,
-        "password": password,
-      });
-
-      return response.data["token"];
-    } on DioError catch (error) {
-      print(error);
+  Future<User> loginAPI({
+    required String email,
+    required String password,
+  }) async {
+    Response response = await Client.dio.post('/login', data: {
+      "email": email,
+      "password": password,
+    });
+    if (response.statusCode != 200) {
+      throw response.data is Map
+          ? response.data['message']
+          : "Unexpected server error";
     }
-    throw "an eroror occored";
+    return User.fromJson(response.data['data']);
   }
 }
