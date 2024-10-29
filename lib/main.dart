@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasky/Provider/auth_proider.dart';
 import 'package:provider/provider.dart';
+import 'package:tasky/pages/Employee.dart';
+import 'package:tasky/pages/LeavesPage.dart';
+import 'package:tasky/pages/Manager.dart';
+import 'package:tasky/pages/notification.dart';
 import 'package:tasky/sign/login_page.dart';
 import 'package:tasky/sign/signup_page.dart';
 
@@ -57,5 +61,21 @@ final _router = GoRouter(
       path: '/signup',
       builder: (context, state) => SignupPage(),
     ),
+    GoRoute(
+      path: '/employee',
+      builder: (context, state) => EmployeePage(),
+    ),
+    GoRoute(
+      path: '/manager',
+      builder: (context, state) => ManagerPage(),
+    ),
+    GoRoute(
+      path: '/leaves',
+      builder: (context, state) => LeavesPage(),
+    ),
+    GoRoute(
+      path: '/notification',
+      builder: (context, state) => NotificationPage(),
+    )
   ],
 );
