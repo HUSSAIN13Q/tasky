@@ -71,7 +71,7 @@ class _NotificationPageState extends State<NotificationPage> {
                         gradient: LinearGradient(
                           colors: [
                             Color(
-                                0xFFB0B0E0), // First color of the gradient (light blue)
+                                0xFF062F3E), // First color of the gradient (light blue)
                             Colors
                                 .white, // Second color of the gradient (white)
                           ],
