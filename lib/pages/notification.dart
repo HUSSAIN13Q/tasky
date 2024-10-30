@@ -36,21 +36,21 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF2E2D7D), // Change to your preferred color
-        title: Text(
-          'Notifications', // Title can be changed based on the page name
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white, // Set text color to white
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.refresh, color: Colors.white), // Refresh button
-          onPressed:
-              _refreshNotifications, // Calls the refresh function on press
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Color(0xFF2E2D7D), // Change to your preferred color
+      //   title: Text(
+      //     'Notifications', // Title can be changed based on the page name
+      //     style: TextStyle(
+      //       fontWeight: FontWeight.bold,
+      //       color: Colors.white, // Set text color to white
+      //     ),
+      //   ),
+      //   leading: IconButton(
+      //     icon: Icon(Icons.refresh, color: Colors.white), // Refresh button
+      //     onPressed:
+      //         _refreshNotifications, // Calls the refresh function on press
+      //   ),
+      // ),
       body: Container(
         color: Color(0xFFE0E0E0), // Set the background color here
         child: RefreshIndicator(
