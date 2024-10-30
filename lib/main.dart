@@ -30,19 +30,35 @@ class MainApp extends StatelessWidget {
       routerConfig: _router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xFF8990FF),
-        scaffoldBackgroundColor: Color(0xFFE0E7FF),
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF8990FF),
+        primaryColor: const Color(0xFF062F3E), // Updated primary color
+        scaffoldBackgroundColor: const Color(0xFFE0E7FF), // Background color
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF062F3E), // Updated AppBar color
+          titleTextStyle: TextStyle(
+            color: Colors.white, // Text color for AppBar title
+            fontSize: 20, // Font size
+            fontWeight: FontWeight.bold, // Font weight
+          ),
         ),
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           headlineLarge: TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
+            color: Colors.white, // Updated text color for better visibility
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
           bodyLarge: TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
+            color: Color.fromARGB(255, 0, 0, 0), // Body text color
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: const Color(0xFF429094), // Button text color
+            padding: const EdgeInsets.symmetric(
+                horizontal: 40, vertical: 15), // Button size
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30), // Rounded corners
+            ),
           ),
         ),
       ),
@@ -51,7 +67,7 @@ class MainApp extends StatelessWidget {
 }
 
 final _router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/employee',
   routes: [
     GoRoute(
       path: '/login',
@@ -76,6 +92,6 @@ final _router = GoRouter(
     GoRoute(
       path: '/notification',
       builder: (context, state) => NotificationPage(),
-    )
+    ),
   ],
 );

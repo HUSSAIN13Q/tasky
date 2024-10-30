@@ -18,6 +18,13 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back,
+              color: Colors.white), // White back arrow
+          onPressed: () {
+            context.go('/login'); // Navigate to Login page
+          },
+        ),
         title: const Text(
           "Sign Up",
           style: TextStyle(color: Colors.white), // AppBar text color
@@ -55,33 +62,64 @@ class _SignupPageState extends State<SignupPage> {
               controller: passwordController,
               obscureText: true,
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                try {
-                  context.read<AuthProvider>().signupAPI(
-                        email: usernameController.text,
-                        password: passwordController.text,
-                      );
-                  context.go('/home');
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Something went wrong")),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: const Color(0xFF429094), // Text color
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30), // Rounded corners
+            const SizedBox(height: 40),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        // Handle Sign Up action
+                        try {
+                          context.read<AuthProvider>().signupAPI(
+                                email: usernameController.text,
+                                password: passwordController.text,
+                              );
+                          context.go('/home');
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Something went wrong")),
+                          );
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF062F3E), // Circle button color
+                        ),
+                        padding:
+                            const EdgeInsets.all(16), // Padding around the icon
+                        child: const Icon(
+                          Icons.app_registration, // Sign Up icon
+                          size: 40,
+                          color: Colors.white, // Icon color
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 30), // Spacing between icons
+                    GestureDetector(
+                      onTap: () {
+                        context.go('/login'); // Navigate to Login page
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF062F3E), // Circle button color
+                        ),
+                        padding:
+                            const EdgeInsets.all(16), // Padding around the icon
+                        child: const Icon(
+                          Icons.login, // Sign In icon
+                          size: 40,
+                          color: Colors.white, // Icon color
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              child: const Text(
-                "Sign Up",
-                style: TextStyle(fontSize: 18), // Button text style
               ),
             ),
           ],

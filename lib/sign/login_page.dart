@@ -18,11 +18,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            // Optional: Add action for back button if needed
+          },
+        ),
         title: const Text(
           "Login",
-          style: TextStyle(color: Colors.white), // AppBar text color
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF062F3E), // AppBar background color
+        backgroundColor: const Color(0xFF062F3E),
       ),
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -35,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF062F3E), // Text color
+                color: Color(0xFF062F3E),
               ),
             ),
             const SizedBox(height: 20),
@@ -55,74 +61,64 @@ class _LoginPageState extends State<LoginPage> {
               controller: passwordController,
               obscureText: true,
             ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await context.read<AuthProvider>().loginAPI(
-                        email: usernameController.text,
-                        password: passwordController.text,
-                      );
-                  context.go('/home');
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(e.toString())),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: const Color(0xFF429094), // Text color
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30), // Rounded corners
+            const SizedBox(height: 40),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        try {
+                          await context.read<AuthProvider>().loginAPI(
+                                email: usernameController.text,
+                                password: passwordController.text,
+                              );
+                          context.go('/home');
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())),
+                          );
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF062F3E),
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: const Icon(
+                          Icons.login, // Sign In icon
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 30),
+                    GestureDetector(
+                      onTap: () {
+                        context.go('/signup'); // Navigate to Signup page
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: const Color(0xFF062F3E),
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        child: const Icon(
+                          Icons.app_registration, // Sign Up icon
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              child: const Text(
-                "Login",
-                style: TextStyle(fontSize: 18), // Button text style
-              ),
-            ),
-            const SizedBox(height: 22),
-            ElevatedButton(
-              onPressed: () {
-                context.push('/signup');
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor:
-                    const Color(0xFF429094), // Text color (same as Login)
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40, vertical: 15), // Same size
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30), // Rounded corners
-                ),
-              ),
-              child: const Text(
-                "Sign Up",
-                style: TextStyle(fontSize: 18), // Button text style
               ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          try {
-            await context.read<AuthProvider>().loginAPI(
-                  email: usernameController.text,
-                  password: passwordController.text,
-                );
-            context.go('/home');
-          } catch (e) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(e.toString())),
-            );
-          }
-        },
-        backgroundColor: const Color(0xFF429094), // Floating button color
-        child: const Icon(Icons.login), // Icon for floating button
       ),
     );
   }
