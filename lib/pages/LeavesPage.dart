@@ -70,6 +70,10 @@ class _LeavesPageState extends State<LeavesPage> {
             child: InputDecorator(
               decoration: InputDecoration(
                 labelText: "Start Date",
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.calendar_today),
+                  onPressed: () => _selectDate(context, true),
+                ),
               ),
               isEmpty: this._startDate == null,
               child: Text(
@@ -84,6 +88,10 @@ class _LeavesPageState extends State<LeavesPage> {
             child: InputDecorator(
               decoration: InputDecoration(
                 labelText: "End Date",
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.calendar_today),
+                  onPressed: () => _selectDate(context, false),
+                ),
               ),
               isEmpty: this._endDate == null,
               child: Text(
