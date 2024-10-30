@@ -122,7 +122,22 @@ class _LeavesPageState extends State<LeavesPage> {
                 );
               }
             },
-            child: Text('Request Leave'),
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(
+                Colors.grey[800]!, // Set button color here
+              ),
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                TextStyle(
+                  color: Colors.white, // Set text color to white
+                  fontSize: 20, // Change font size to 20
+                ),
+              ),
+            ),
+            child: Text('Request Leave',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize:
+                        20)), // Ensure button text is white and font size is 20
           ),
           SizedBox(height: 20),
 
