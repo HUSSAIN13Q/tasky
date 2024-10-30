@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Meditation App',
+      title: 'tsky App',
       routerConfig: _router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -51,7 +51,7 @@ class MainApp extends StatelessWidget {
 }
 
 final _router = GoRouter(
-  initialLocation: '/login',
+  initialLocation: '/manager',
   routes: [
     GoRoute(
       path: '/login',

@@ -66,7 +66,6 @@ class _LeavesPageState extends State<LeavesPage> {
               });
             },
           ),
-
           GestureDetector(
             onTap: () => _selectDate(context, true),
             child: InputDecorator(
@@ -77,8 +76,7 @@ class _LeavesPageState extends State<LeavesPage> {
               child: Text(
                 _startDate == null
                     ? ""
-                    : DateFormat('yyyy-MM-dd').format(_endDate!),
-                // ?.toString() ?? ""
+                    : DateFormat('yyyy-MM-dd').format(_startDate!),
               ),
             ),
           ),
@@ -93,27 +91,7 @@ class _LeavesPageState extends State<LeavesPage> {
                 _endDate == null
                     ? ""
                     : DateFormat('yyyy-MM-dd').format(_endDate!),
-                // ?.toString() ?? ""
               ),
-            ),
-          ),
-
-          SizedBox(height: 20),
-          SizedBox(height: 20),
-          // Due Date field
-          TextFormField(
-            readOnly: true,
-            decoration: InputDecoration(
-              labelText: 'Due Date',
-              suffixIcon: IconButton(
-                icon: Icon(Icons.calendar_today),
-                onPressed: () => _selectDate(context, false),
-              ),
-            ),
-            controller: TextEditingController(
-              text: _endDate == null
-                  ? ''
-                  : 'Due Date: ${_endDate!.toLocal()}'.split(' ')[0],
             ),
           ),
           SizedBox(height: 20),
@@ -126,8 +104,6 @@ class _LeavesPageState extends State<LeavesPage> {
                   SnackBar(
                     content: Text(
                       'Leave Requested: $_selectedLeaveType from ${DateFormat('yyyy-MM-dd').format(_startDate!.toLocal())} to ${DateFormat('yyyy-MM-dd').format(_endDate!.toLocal())}',
-
-                      // 'Leave Requested: $_selectedLeaveType from ${_startDate!.toLocal()} to ${_endDate!.toLocal()}',
                     ),
                   ),
                 );
@@ -140,6 +116,43 @@ class _LeavesPageState extends State<LeavesPage> {
               }
             },
             child: Text('Request Leave'),
+          ),
+          SizedBox(height: 20),
+
+          // Display Leave Request Cards
+          Expanded(
+            child: ListView.builder(
+              itemCount: leaveTypes.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  color: Colors.blue[50],
+                  child: ListTile(
+                    title: Text(
+                      leaveTypes[index],
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      'Requested for ${DateFormat('yyyy-MM-dd').format(_selectedDay)}',
+                    ),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Status: Pending',
+                          style: TextStyle(color: Colors.orange),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          'Duration: 5 days',
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),

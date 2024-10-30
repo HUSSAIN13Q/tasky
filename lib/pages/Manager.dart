@@ -17,9 +17,9 @@ class ManagerPage extends StatefulWidget {
 
 class _ManagerPageState extends State<ManagerPage> {
   int _selectedIndex = 0;
+  List<Task> tasks = []; // Store tasks here
 
-  // Sample list to hold tasks assigned to employees
-  final List<Task> tasks = [
+  final List<Task> initialTasks = [
     Task(
       employeeName: 'John Doe',
       title: 'Assign Team Project',
@@ -41,9 +41,13 @@ class _ManagerPageState extends State<ManagerPage> {
   @override
   void initState() {
     super.initState();
+    tasks = List.from(initialTasks); // Initialize with some tasks
     _pages = [
       TaskPage(
-          tasks: tasks, onUpdate: _updateTask), // Default page showing tasks
+        tasks: tasks,
+        onUpdate: _updateTask,
+        onAdd: _addTask,
+      ),
       NotificationsPage(), // Notifications page
     ];
   }
@@ -59,9 +63,21 @@ class _ManagerPageState extends State<ManagerPage> {
       for (var task in tasks) {
         if (task.title == title) {
           task.status = isApproved ? 'Approved' : 'Denied';
-          task.comment = comment; // Save comment
+          task.comment = comment;
         }
       }
+    });
+  }
+
+  void _addTask(Task task) {
+    setState(() {
+      tasks.add(task);
+    });
+  }
+
+  void _refreshTasks() {
+    setState(() {
+      // Refresh tasks logic
     });
   }
 
@@ -69,9 +85,33 @@ class _ManagerPageState extends State<ManagerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Manager Dashboard'),
+        title: Text(
+          _selectedIndex == 0 ? 'Task Dashboard' : 'Notifications',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.grey[800],
+          ),
+        ),
+        backgroundColor: Color(0xFFE0E0E0),
+        elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(3.0),
+          child: Container(
+            height: 3.0,
+            color: Colors.white,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: _refreshTasks,
+          ),
+        ],
       ),
-      body: _pages[_selectedIndex],
+      body: Container(
+        color: Color(0xFFE0E0E0),
+        child: _pages[_selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -86,92 +126,84 @@ class _ManagerPageState extends State<ManagerPage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-    );
-  }
-}
-
-class TaskPage extends StatelessWidget {
-  final List<Task> tasks;
-  final Function(String title, String comment, bool isApproved) onUpdate;
-
-  TaskPage({required this.tasks, required this.onUpdate});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: tasks.length,
-      itemBuilder: (context, index) {
-        return Card(
-          margin: EdgeInsets.all(10),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Employee: ${tasks[index].employeeName}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 8),
-                Text('Task Title: ${tasks[index].title}',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: 4),
-                Text('Description: ${tasks[index].description}'),
-                SizedBox(height: 4),
-                Text('Status: ${tasks[index].status}'),
-                SizedBox(height: 4),
-                Text(
-                    'Deadline: ${tasks[index].deadline.toLocal().toString().split(' ')[0]}'),
-                SizedBox(height: 8),
-                ButtonBar(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        _showCommentDialog(context, tasks[index].title, true);
-                      },
-                      child: Text('Approve'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        _showCommentDialog(context, tasks[index].title, false);
-                      },
-                      child: Text('Deny'),
-                    ),
-                  ],
-                ),
-                if (tasks[index].comment != null)
-                  Text('Comment: ${tasks[index].comment}',
-                      style: TextStyle(color: Colors.red)),
-              ],
-            ),
-          ),
-        );
-      },
+      floatingActionButton: _selectedIndex == 0
+          ? FloatingActionButton(
+              onPressed: () {
+                _showAddTaskDialog(context);
+              },
+              child: Icon(Icons.add),
+            )
+          : null,
     );
   }
 
-  void _showCommentDialog(BuildContext context, String title, bool isApproved) {
-    final TextEditingController commentController = TextEditingController();
+  void _showAddTaskDialog(BuildContext context) {
+    final TextEditingController titleController = TextEditingController();
+    final TextEditingController descriptionController = TextEditingController();
+    final TextEditingController employeeNameController =
+        TextEditingController();
+    DateTime? deadline;
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(isApproved ? 'Approve Task' : 'Deny Task'),
+          title: Text('Add New Task'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
-                controller: commentController,
-                decoration: InputDecoration(labelText: 'Comment'),
+                controller: employeeNameController,
+                decoration: InputDecoration(labelText: 'Employee Name'),
+              ),
+              TextField(
+                controller: titleController,
+                decoration: InputDecoration(labelText: 'Task Title'),
+              ),
+              TextField(
+                controller: descriptionController,
+                decoration: InputDecoration(labelText: 'Description'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  deadline = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime.now(),
+                    lastDate: DateTime(2025),
+                  );
+                },
+                child: Text(deadline == null
+                    ? 'Select Deadline'
+                    : 'Deadline: ${deadline!.toLocal()}'.split(' ')[0]),
               ),
             ],
           ),
           actions: [
             TextButton(
               onPressed: () {
-                onUpdate(title, commentController.text, isApproved);
-                Navigator.of(context).pop();
+                if (titleController.text.isNotEmpty &&
+                    employeeNameController.text.isNotEmpty) {
+                  final newTask = Task(
+                    employeeName: employeeNameController.text,
+                    title: titleController.text,
+                    description: descriptionController.text,
+                    status: 'Assigned',
+                    deadline: deadline ?? DateTime.now().add(Duration(days: 7)),
+                  );
+                  _addTask(newTask);
+                  Navigator.of(context).pop();
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content:
+                          Text('Please enter employee name and task title.'),
+                      backgroundColor: Colors.grey,
+                    ),
+                  );
+                }
               },
-              child: Text('Submit'),
+              child: Text('Add Task'),
             ),
             TextButton(
               onPressed: () {
@@ -186,32 +218,81 @@ class TaskPage extends StatelessWidget {
   }
 }
 
-class NotificationsPage extends StatelessWidget {
+class TaskPage extends StatelessWidget {
+  final List<Task> tasks;
+  final Function(String title, String comment, bool isApproved) onUpdate;
+  final Function(Task task) onAdd;
+
+  TaskPage({required this.tasks, required this.onUpdate, required this.onAdd});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Notifications',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          SizedBox(height: 20),
-          Text('You have no new notifications.',
-              style: TextStyle(fontSize: 20)),
-        ],
-      ),
+    return ListView.builder(
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        return Card(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+          margin: EdgeInsets.all(10),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFFB0B0E0),
+                  Colors.white,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Employee: ${tasks[index].employeeName}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black)),
+                SizedBox(height: 8),
+                Text('Task Title: ${tasks[index].title}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.black)),
+                SizedBox(height: 4),
+                Text('Description: ${tasks[index].description}',
+                    style: TextStyle(color: Colors.black)),
+                SizedBox(height: 4),
+                Text('Status: ${tasks[index].status}',
+                    style: TextStyle(color: Colors.black)),
+                SizedBox(height: 4),
+                Text(
+                    'Deadline: ${tasks[index].deadline.toLocal().toString().split(' ')[0]}',
+                    style: TextStyle(color: Colors.black)),
+                SizedBox(height: 8),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
 
-// Task model to represent each task
+class NotificationsPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Notifications Page'),
+    );
+  }
+}
+
 class Task {
   String employeeName;
   String title;
   String description;
   String status;
   DateTime deadline;
-  String? comment; // Optional comment field
+  String? comment;
 
   Task({
     required this.employeeName,
@@ -219,6 +300,10 @@ class Task {
     required this.description,
     required this.status,
     required this.deadline,
-    this.comment, // Initialize as null
+    this.comment,
   });
+}
+
+void main() {
+  runApp(MyApp());
 }
