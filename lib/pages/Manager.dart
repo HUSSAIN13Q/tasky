@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasky/pages/notification.dart';
 
 class MyApp extends StatelessWidget {
   @override
@@ -48,7 +49,7 @@ class _ManagerPageState extends State<ManagerPage> {
         onUpdate: _updateTask,
         onAdd: _addTask,
       ),
-      NotificationsPage(), // Notifications page
+      NotificationPage(), // Notifications page
     ];
   }
 
@@ -86,7 +87,7 @@ class _ManagerPageState extends State<ManagerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _selectedIndex == 0 ? 'Task Dashboard' : 'Notifications',
+          _selectedIndex == 0 ? 'Manager Dashboard' : 'Notifications',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.grey[800],
@@ -277,14 +278,14 @@ class TaskPage extends StatelessWidget {
   }
 }
 
-class NotificationsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Notifications Page'),
-    );
-  }
-}
+// class NotificationsPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Text('Notifications Page'),
+//     );
+//   }
+// }
 
 class Task {
   String employeeName;

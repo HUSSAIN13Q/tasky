@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
 class LeavesPage extends StatefulWidget {
@@ -124,9 +123,20 @@ class _LeavesPageState extends State<LeavesPage> {
             child: ListView.builder(
               itemCount: leaveTypes.length,
               itemBuilder: (context, index) {
-                return Card(
+                return Container(
                   margin: EdgeInsets.symmetric(vertical: 8.0),
-                  color: Colors.blue[50],
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(
+                            0xFFB0B0E0), // First color of the gradient (light blue)
+                        Colors.white, // Second color of the gradient (white)
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                   child: ListTile(
                     title: Text(
                       leaveTypes[index],

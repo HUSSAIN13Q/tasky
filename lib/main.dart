@@ -51,7 +51,7 @@ class MainApp extends StatelessWidget {
 }
 
 final _router = GoRouter(
-  initialLocation: '/manager',
+  initialLocation: '/employee',
   routes: [
     GoRoute(
       path: '/login',

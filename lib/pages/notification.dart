@@ -39,7 +39,7 @@ class _NotificationPageState extends State<NotificationPage> {
       appBar: AppBar(
         backgroundColor: Color(0xFF2E2D7D), // Change to your preferred color
         title: Text(
-          'Notification',
+          'Notifications', // Title can be changed based on the page name
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white, // Set text color to white
@@ -51,23 +51,78 @@ class _NotificationPageState extends State<NotificationPage> {
               _refreshNotifications, // Calls the refresh function on press
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: _refreshNotifications, // Enables pull-to-refresh gesture
-        child: notifications.isEmpty
-            ? Center(
-                child: Text(
-                  'You have no new notifications.',
-                  style: TextStyle(fontSize: 18),
+      body: Container(
+        color: Color(0xFFE0E0E0), // Set the background color here
+        child: RefreshIndicator(
+          onRefresh: _refreshNotifications, // Enables pull-to-refresh gesture
+          child: notifications.isEmpty
+              ? Center(
+                  child: Text(
+                    'You have no new notifications.',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                )
+              : ListView.builder(
+                  itemCount: notifications.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(
+                                0xFFB0B0E0), // First color of the gradient (light blue)
+                            Colors
+                                .white, // Second color of the gradient (white)
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              notifications[index],
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'This is a description for ${notifications[index]}.', // Sample description
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Align(
+                              alignment: Alignment.bottomRight,
+                              child: TextButton(
+                                onPressed: () {
+                                  // Handle notification action
+                                },
+                                child: Text(
+                                  'View More',
+                                  style: TextStyle(
+                                    color: Color(0xFF2E2D7D), // Action color
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              )
-            : ListView.builder(
-                itemCount: notifications.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(notifications[index]),
-                  );
-                },
-              ),
+        ),
       ),
     );
   }
