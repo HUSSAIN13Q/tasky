@@ -211,7 +211,8 @@ class _TaskPageState extends State<TaskPage> {
                 title: Text(
                   tasks[index].title,
                   style: TextStyle(
-                    color: Color(0xFF062F3E), // Changed task text to dark blue
+                    color: Color.fromARGB(
+                        255, 247, 253, 255), // Changed task text to dark blue
                     fontSize: 24,
                     fontWeight: FontWeight.w600, // Lora 600
                   ),
@@ -222,8 +223,8 @@ class _TaskPageState extends State<TaskPage> {
                     Text(
                       tasks[index].description,
                       style: TextStyle(
-                        color: Color(
-                            0xFF062F3E), // Changed description text to dark blue
+                        color: Color.fromARGB(255, 243, 252,
+                            255), // Changed description text to dark blue
                         fontSize: 20,
                         fontWeight: FontWeight.w600, // Lora 600
                       ),
@@ -231,8 +232,8 @@ class _TaskPageState extends State<TaskPage> {
                     Text(
                       'Status: ${tasks[index].state}',
                       style: TextStyle(
-                        color: Color(
-                            0xFF062F3E), // Changed status text to dark blue
+                        color: Color.fromARGB(255, 246, 253,
+                            255), // Changed status text to dark blue
                         fontSize: 20,
                         fontWeight: FontWeight.w600, // Lora 600
                       ),
@@ -241,8 +242,8 @@ class _TaskPageState extends State<TaskPage> {
                       Text(
                         'Manager Comment: ${tasks[index].comment}',
                         style: TextStyle(
-                          color: Color(
-                              0xFF062F3E), // Changed comment text to dark blue
+                          color: Color.fromARGB(255, 241, 251,
+                              255), // Changed comment text to dark blue
                           fontSize: 20,
                           fontWeight: FontWeight.w600, // Lora 600
                         ),
@@ -264,8 +265,8 @@ class _TaskPageState extends State<TaskPage> {
                         ),
                         Text('Started',
                             style: TextStyle(
-                              color: Color(
-                                  0xFF062F3E), // Changed checkbox label text to dark blue
+                              color: Color.fromARGB(255, 236, 250,
+                                  255), // Changed checkbox label text to dark blue
                               fontSize: 20,
                               fontWeight: FontWeight.w600, // Lora 600
                             )),
@@ -287,8 +288,8 @@ class _TaskPageState extends State<TaskPage> {
                         ),
                         Text('Not Started',
                             style: TextStyle(
-                              color: Color(
-                                  0xFF062F3E), // Changed checkbox label text to dark blue
+                              color: Color.fromARGB(255, 240, 251,
+                                  255), // Changed checkbox label text to dark blue
                               fontSize: 20,
                               fontWeight: FontWeight.w600, // Lora 600
                             )),
@@ -310,8 +311,8 @@ class _TaskPageState extends State<TaskPage> {
                         ),
                         Text('Done',
                             style: TextStyle(
-                              color: Color(
-                                  0xFF062F3E), // Changed checkbox label text to dark blue
+                              color: Color.fromARGB(255, 241, 251,
+                                  255), // Changed checkbox label text to dark blue
                               fontSize: 20,
                               fontWeight: FontWeight.w600, // Lora 600
                             )),
