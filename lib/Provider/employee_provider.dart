@@ -1,39 +1,75 @@
 import 'package:flutter/material.dart';
-import 'package:tasky/model/leave.dart';
-import 'package:tasky/model/task.dart';
+import 'package:tasky/model/employee.dart';
+import 'package:tasky/model/user.dart';
+import 'package:tasky/services/client_services.dart';
 
+// class UserProvider with ChangeNotifier {
+//   List<User> _users = [];
+
+//   List<User> get users => _users;
+
+//   Future<void> fetchUsers() async {
+//     try {
+//       final response = await Client.dio.get('/employees');
+//       if (response.data != null && response.data['data'] != null) {
+//         final employeesData = response.data['data']['employees'];
+
+//         // Ensure employeesData is a list and map each item to a User
+//         if (employeesData is List) {
+//           _users =
+//               employeesData.map((userData) => User.fromJson(userData)).toList();
+//         } else {
+//           print("Expected a list of employees, but got: $employeesData");
+//         }
+
+//         notifyListeners(); // Notify listeners to update the UI
+//       } else {
+//         print("No data found in response.");
+//       }
+//     } catch (e) {
+//       print("Error fetching users: $e");
+//       // Handle error, possibly notify listeners with error state
+//     }
+//   }
+// }
+// class UserProvider with ChangeNotifier {
+//   List<User> _users = [];
+
+//   List<User> get users => _users;
+
+//   Future<void> fetchUsers() async {
+//     try {
+//       final response = await Client.dio.get('/employees');
+//       if (response.data != null && response.data['data'] != null) {
+//         final employeesData = response.data['data']['employees'] as List;
+
+//         _users =
+//             employeesData.map((userData) => User.fromJson(userData)).toList();
+//         notifyListeners(); // Notify UI to update
+//       } else {
+//         print("No employee data found in response.");
+//       }
+//     } catch (e) {
+//       print("Error fetching users: $e");
+//     }
+//   }
+// }
 class EmployeeProvider with ChangeNotifier {
-  List<Task> _tasks = [];
-  final List<LeaveRequest> _leaveRequests = [];
+  List<Employee> _employees = [];
 
-  List<Task> get tasks => _tasks;
-  List<LeaveRequest> get leaveRequests => _leaveRequests;
+  List<Employee> get employees => _employees;
 
-  void setTasks(List<Task> tasks) {
-    _tasks = tasks;
-    notifyListeners();
-  }
+  Future<void> fetchEmployees() async {
+    try {
+      final response = await Client.dio.get('/employees');
+      final employeesData = response.data['data']['employees'] as List;
 
-  void addTask(Task task) {
-    _tasks.add(task);
-    notifyListeners();
-  }
-
-  void updateTaskStatus(String taskId, String status) {
-    final task = _tasks.firstWhere((task) => task.id == taskId);
-    task.status = status;
-    notifyListeners();
-  }
-
-  void addLeaveRequest(LeaveRequest request) {
-    _leaveRequests.add(request);
-    notifyListeners();
-  }
-
-  void updateLeaveRequestStatus(String requestId, String status) {
-    final request =
-        _leaveRequests.firstWhere((request) => request.id == requestId);
-    request.status = status;
-    notifyListeners();
+      _employees = employeesData
+          .map((employeeData) => Employee.fromJson(employeeData))
+          .toList();
+      notifyListeners();
+    } catch (e) {
+      print("Error fetching employees: $e");
+    }
   }
 }

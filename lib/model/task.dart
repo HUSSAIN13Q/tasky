@@ -1,36 +1,37 @@
 class Task {
-  final String id;
+  final int id;
+  final int userId;
   final String title;
   final String description;
-  late final String
-      status; // e.g., "not started", "in progress", "done", "pending", "accepted", "denied"
-  late final String? managerComments; // Comments if a redo is requested
+  String status;
+  String? comments;
 
   Task({
     required this.id,
+    required this.userId,
     required this.title,
     required this.description,
-    this.status = 'not started',
-    this.managerComments,
+    required this.status,
+    this.comments,
   });
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'description': description,
-      'status': status,
-      'managerComments': managerComments,
-    };
-  }
-
-  factory Task.fromMap(Map<String, dynamic> map) {
+  factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
-      id: map['id'],
-      title: map['title'],
-      description: map['description'],
-      status: map['status'],
-      managerComments: map['managerComments'],
+      id: json['id'],
+      userId: json['user_id'],
+      title: json['title'],
+      description: json['description'],
+      status: json['status'],
+      comments: json['comments'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'user_id': userId,
+        'title': title,
+        'description': description,
+        'status': status,
+        'comments': comments,
+      };
 }

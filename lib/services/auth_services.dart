@@ -47,6 +47,10 @@ class AuthServices {
           ? response.data['message']
           : "Unexpected server error";
     }
+
+    if (response.statusCode != 200) {
+      throw "not good";
+    }
     var user = User.fromJson(response.data['data']);
     print(response.statusCode);
 
