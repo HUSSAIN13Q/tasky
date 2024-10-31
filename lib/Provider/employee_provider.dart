@@ -25,8 +25,4 @@ class EmployeeProvider with ChangeNotifier {
   Employee findEmployeesById(int id) {
     return _employees.firstWhere((emp) => emp.id == id);
   }
-
-  Employee findEmployeesByUasername(String username) {
-    return _employees.firstWhere((emp) => emp.username == username);
-  }
 }
