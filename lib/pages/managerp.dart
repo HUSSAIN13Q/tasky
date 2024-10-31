@@ -31,7 +31,6 @@ class _ManagerScreenState extends State<ManagerScreen> {
     final employeeProvider = Provider.of<EmployeeProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Manager Dashboard')),
       body: employeeProvider.employees.isEmpty
           ? const Center(child: Text("No employees available."))
           : ListView.builder(

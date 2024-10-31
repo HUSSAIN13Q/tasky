@@ -3,12 +3,14 @@ class NotificationModel {
   final int userId;
   final String message;
   final String type;
+  final DateTime createdAt;
 
   NotificationModel({
     required this.id,
     required this.userId,
     required this.message,
     required this.type,
+    required this.createdAt,
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class NotificationModel {
       userId: json['user_id'],
       message: json['message'],
       type: json['type'],
+      createdAt: DateTime.parse(json['created_at']),
     );
   }
 
@@ -25,5 +28,6 @@ class NotificationModel {
         'user_id': userId,
         'message': message,
         'type': type,
+        "created_at": createdAt,
       };
 }

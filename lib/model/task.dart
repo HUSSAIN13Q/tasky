@@ -6,6 +6,8 @@ class Task {
   String status;
   String? comments;
 
+  bool get shoudShowAp => status == "pending";
+
   Task({
     required this.id,
     required this.userId,

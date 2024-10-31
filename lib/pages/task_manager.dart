@@ -30,7 +30,7 @@ class _TaskReviewScreenState extends State<TaskReviewScreen> {
     final taskProvider = Provider.of<TaskProvider>(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Manager Dashboard')),
+      // appBar: AppBar(title: const Text('Manager Dashboard')),
       body: taskProvider.tasks.isEmpty
           ? const Center(child: Text("No tasks available."))
           : ListView.builder(

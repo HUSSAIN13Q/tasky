@@ -163,6 +163,7 @@ import 'package:tasky/services/client_services.dart';
 
 class AuthProvider extends ChangeNotifier {
   User? user;
+  final tokenKey = "token";
 
   Future<void> signup({
     required String email,
@@ -230,11 +231,10 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logout() async {
-    user = null;
-    Client.dio.options.headers.remove(HttpHeaders.authorizationHeader);
+  void logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    prefs.remove(tokenKey);
+    user = null;
     notifyListeners();
   }
 }
