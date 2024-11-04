@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Provider/employee_provider.dart';
 import 'package:tasky/Provider/taskprovider.dart';
-import 'package:tasky/widgets/drawer.dart';
 
 class ManagerScreen extends StatefulWidget {
   const ManagerScreen({Key? key}) : super(key: key);

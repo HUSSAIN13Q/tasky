@@ -2,37 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:tasky/model/user.dart';
 import 'package:tasky/services/client_services.dart';
 
-// class AuthServices {
-//   Future<User> registerAPI({
-//     required String email,
-//     required String password,
-//   }) async {
-//     var response = await Client.dio.post('/signup', data: {
-//       "email": email,
-//       "password": password,
-//     });
-
-//     return User(
-//       username: response.data['data']['user'],
-//       token: response.data['data']['token'],
-//     );
-//   }
-
-// Future<String> signin(
-//     {required String username, required String password}) async {
-//   try {
-//     Response response = await Client.dio.post('/signin', data: {
-//       "username": username,
-//       "password": password,
-//     });
-
-//     return response.data["token"];
-//   } on DioError catch (error) {
-//     print(error);
-//   }
-//   throw "an eroror occored";
-// }
-
 class AuthServices {
   Future<User> signupAPI({
     required String email,

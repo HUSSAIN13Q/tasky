@@ -117,12 +117,5 @@ class TaskProvider with ChangeNotifier {
     } catch (e) {
       print("Error updating task $taskId: $e");
     }
-
-    // Clear cached tasks for all users (useful after logout or role switch)
-    void clearCache() {
-      _tasks.clear();
-      _tasksByUser.clear();
-      notifyListeners();
-    }
   }
 }

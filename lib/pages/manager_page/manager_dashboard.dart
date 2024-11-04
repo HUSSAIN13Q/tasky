@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tasky/Provider/auth_proider.dart';
 import 'package:tasky/pages/manager_page/review.dart';
-import 'package:tasky/pages/task_manager.dart';
 import 'manager_screen.dart';
 
 class ManagerDashboard extends StatefulWidget {

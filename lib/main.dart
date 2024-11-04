@@ -26,9 +26,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => authProvider),
-        // ChangeNotifierProvider(create: (_) => TaskProvider()),
         ChangeNotifierProvider(create: (_) => EmployeeProvider()),
-        //ChangeNotifierProvider(create: (_) => NotificationProvider()),
         ChangeNotifierProvider(create: (_) => TaskProvider()..fetchTasks()),
         ChangeNotifierProvider(
             create: (_) => NotificationProvider()..fetchNotifications()),
@@ -48,34 +46,33 @@ class MainApp extends StatelessWidget {
       routerConfig: _router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: const Color(0xFF062F3E), // Updated primary color
-        scaffoldBackgroundColor: const Color(0xFFE0E7FF), // Background color
+        primaryColor: const Color(0xFF062F3E),
+        scaffoldBackgroundColor: const Color(0xFFE0E7FF),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF062F3E), // Updated AppBar color
+          backgroundColor: Color(0xFF062F3E),
           titleTextStyle: TextStyle(
-            color: Colors.white, // Text color for AppBar title
-            fontSize: 20, // Font size
-            fontWeight: FontWeight.bold, // Font weight
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
         ),
         textTheme: const TextTheme(
           headlineLarge: TextStyle(
-            color: Colors.white, // Updated text color for better visibility
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
           bodyLarge: TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0), // Body text color
+            color: Color.fromARGB(255, 0, 0, 0),
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
-            backgroundColor: const Color(0xFF429094), // Button text color
-            padding: const EdgeInsets.symmetric(
-                horizontal: 40, vertical: 15), // Button size
+            backgroundColor: const Color(0xFF429094),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30), // Rounded corners
+              borderRadius: BorderRadius.circular(30),
             ),
           ),
         ),
@@ -112,15 +109,5 @@ final GoRouter _router = GoRouter(
     if (allowedAnnounymousRoutes.contains(state.matchedLocation)) return null;
 
     return '/login';
-    // redirect: (context, state) {
-    //   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    //   final isLoggedIn = authProvider.user != null;
-    //   final isGoingToLogin = state.matchedLocation == '/login';
-
-    //   if (!isLoggedIn && !isGoingToLogin) return '/login';
-    //   if (isLoggedIn && isGoingToLogin) {
-    //     return authProvider.user!.role == 'manager' ? '/manager' : '/employee';
-    //   }
-    //   return null;
   },
 );
